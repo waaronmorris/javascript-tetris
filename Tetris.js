@@ -38,7 +38,7 @@ function Tetris(){
 		main.puzzle = new Puzzle(this, main.area, score);
 		
 		score.name = prompt("Enter your name : ", "");
-		score.level = 1000;
+		score.level = 1;
 
 		
 		main.isRunning = true;
