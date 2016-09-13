@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Untitled Document</title>
+<script type="text/javascript" src="Tetris.js"></script>
+<script type="text/javascript" src="Score.js"></script>
+<script type="text/javascript" src="Area.js"></script>
+<script type="text/javascript" src="Puzzle.js"></script>
+
+<script	type="text/javascript">
+/*
+	This program was designed by using 
+		Czarek Tomczak's JSTetris ;(http://www.gosu.pl/tetris/)
+		ElbertF ;(http://elbertf.com/tetris/)
+		Lutz Tautenhahn ;(http://www.lutanho.net/play/tetris.html)
+*/
+
+	var score = new Score();
+	var tetris = new Tetris();
+	
+	tetris.unit = 20;
+	tetris.areaX = 20; //document.forms[0].Width.value;
+	tetris.areaY = 18;
+	
+	window.addEventListener('keydown', function(event) {
+  	switch (event.keyCode) {
+		case 78://New Game
+			if(tetris.puzzle){
+			  tetris.reset();	
+			}
+		tetris.start();
+    	break;
+		
+    	case 37: // Left
+      		tetris.puzzle.moveLeft();
+    	break;
+
+    	case 38: // Up
+      		tetris.puzzle.rotate();
+    	break;
+
+    	case 39: // Right
+    	  tetris.puzzle.moveRight();
+    	break;
+
+    	case 40: // Down
+    	  tetris.puzzle.moveDown();
+    	break;
+ 	 }
+	}, false);
+
+</script>
+<style type="text/css">
+<!--
+#frame #leftFrame {
+	width: 273px;
+	float: left;
+}
+
+.td{
+	background:black;
+	color:#000;
+	text-align:center;
+	border: thin solid black;
+}
+
+.td1{
+	background:gray;
+	color:gray;
+	text-align:center;
+	border: thin solid gray;
+}
+
+#block0{
+	background:blue;
+	color:blue;
+	border: thin solid #630;
+}
+#block1{
+	background:blue;
+	color:blue;
+	border: thin solid #C03;
+}
+#block2{
+	background:blue;
+	color:blue;
+	border: thin solid #C03;
+}
+#block3{
+	background:blue;
+	color:blue;
+	border: thin solid #600;
+}
+#block4{
+	background:blue;
+	color:blue;
+	border: thin solid #0C0;
+}
+
+#block5{
+	background:blue;
+	color:blue;
+	border: thin solid #039;
+}
+#block6{
+	background:blue;
+	color:blue;
+	border: thin solid Violet;
+}
+</script>
+.block1 {
+}
+-->
+</style>
+</head>
+
+<body onload="tetris.start()">
+<div id='frame'>
+	<div id="leftFrame">
+    <div id="currentScoreHeading"><h2>Current Score</h2></div>
+    <input name=""  id="currentScore"type="text" readonly="true" />
+    
+    <div id="highScore">
+    <h2>High Score</h2>
+    </div><div>
+    	<table id="highScoreTable">
+        	<script type="text/javascript">
+        		var cookieArray = score.getHighScore();
+							
+				for(var i = 0; i <= cookieArray.length-1; i++){
+						
+						var cookie = cookieArray[i];
+					
+						if(cookie.substring(0, cookie.indexOf("=") - 1) == "name"){
+							document.write("<td>" + cookie.substring(cookie.indexOf("=") +1, cookie.length) + "</td>");
+						}
+							
+						else if(cookie.substring(0, cookie.indexOf("=") - 1) == "score"){
+							document.write("<td>" + cookie.substring(cookie.indexOf("=")+1, cookie.length) + "</td>");
+							document.write("</tr>");
+						}
+					
+						else if(cookie.substring(0, cookie.indexOf("=") - 1) == "rank"){
+							document.write("<tr>");
+							document.write("<td>" + cookie.substring(cookie.indexOf("=")+1, cookie.length) + "</td>");
+						}	
+				}
+       		 </script>
+        </table>
+    </div>
+    <div id='controls'>
+    <h2>Controls</h2>
+    <p>Press up on the keyboard to rotate</p>
+   <p> Press left and right arrow keys to move the puzzle piece</p>
+    <p>Press down to drop the piece</p>
+	<p>Press n to start a new Game</p>
+
+    </div>
+    
+	</div>
+	<div id = 'tetris-holder'>
+		<table id="tetris" border="0" cellspacing="0" cellpadding="0">
+       		<script type="text/javascript">
+       			 document.getElementById("tetris").width = tetris.areaX * tetris.unit;
+				 document.getElementById("tetris").height = tetris.areaY * tetris.unit;
+    			for(var y = 0; y <= tetris.areaY; y++){
+					document.write('<tr>');
+					for(var x = 0; x <= tetris.areaX; x++){
+						if(x % 2){
+							document.write('<td class="td1">0</td>');
+						}
+						else{
+							document.write('<td class="td">0</td>');
+						}
+					}
+				document.write('</tr>');
+				}
+    	</script>
+		</table>
+	</div>
+</div>
+</body>
+</html>
